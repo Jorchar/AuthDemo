@@ -1,0 +1,7 @@
+spring.application.name: AuthDemo
+spring.datasource.url: jdbc:postgresql://localhost:5432/demo-db
+spring.datasource.username: demouser
+spring.datasource.password: demopasswd
+spring.datasource.driver-class-name: org.postgresql.Driver
+
+spring.flyway.enabled: true

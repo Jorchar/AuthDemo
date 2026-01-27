@@ -9,7 +9,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class AuthorizationServerConfig {
-    @Bean
+
     SecurityFilterChain authServerSecurityFilterChain(HttpSecurity http) throws Exception {
         http.with(OAuth2AuthorizationServerConfigurer.authorizationServer(), Customizer.withDefaults());
         return http.build();

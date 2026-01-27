@@ -1,0 +1,38 @@
+services:
+  db_postgres:
+    image: postgres:15
+    container_name: demo-db
+    environment:
+      POSTGRES_DB: demo-db
+      POSTGRES_USER: demouser
+      POSTGRES_PASSWORD: demopasswd
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  cache_redis:
+    image: redis:latest
+    container_name: demo-cache
+    restart: always
+    ports:
+      - "6379:6379"
+    command: [ "redis-server", "--appendonly", "yes" ]
+    volumes:
+      - redis-data:/data
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-commander
+    environment:
+      - REDIS_HOSTS=local:cache_redis:6379
+      - HTTP_USER=democacheuser
+      - HTTP_PASSWORD=democachepasswd
+    ports:
+      - 8081:8081
+    depends_on:
+      - cache_redis
+
+volumes:
+  db-data:
+  redis-data:
