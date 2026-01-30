@@ -1,4 +1,4 @@
-package org.example.authdemo;
+package org.example.authdemo.utils;
 
 import com.nimbusds.jose.jwk.RSAKey;
 
@@ -9,7 +9,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
 
-public class Jwks {
+public class KeyGeneratorUtils {
     public static RSAKey generateRsa() {
         KeyPair keyPair = generateKeyPair();
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
