@@ -1,14 +1,25 @@
 package org.example.authdemo.model;
 
-import lombok.Builder;
+import jakarta.persistence.*;
+import lombok.*;
 
-import java.util.UUID;
+@Entity
+@Table(name = "users")
+@NoArgsConstructor
+@RequiredArgsConstructor
+@Getter
+@Setter
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-@Builder
-public record User(
-        UUID uuid,
-        String firstname,
-        String lastname
-) {
+    @NonNull
+    @Column(name = "first_name")
+    private String firstName;
 
+    @NonNull
+    @Column(name = "last_name")
+    private String lastName;
 }
+

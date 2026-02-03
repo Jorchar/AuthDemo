@@ -10,10 +10,15 @@ post {
   auth: inherit
 }
 
+headers {
+  Content-Type: application/json
+  Accept: application/json
+}
+
 body:json {
   {
-    "firstname":"Jordan",
-    "lastname":"Kucharski"
+    "firstName":"Jordan",
+    "lastName":"Kucharski"
   }
 }
 
