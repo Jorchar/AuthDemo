@@ -1,6 +1,7 @@
 package org.example.authdemo.infrustracture.user.controller;
 
 import org.example.authdemo.infrustracture.user.controller.dto.ErrorResponse;
+import org.example.authdemo.infrustracture.user.persistance.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -15,6 +16,13 @@ public class ErrorHandlerController {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleError(Exception exception) {
         return ResponseEntity.internalServerError().build();
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleError(EntityNotFoundException exception) {
+        HttpStatusCode status = HttpStatus.NOT_FOUND;
+        ErrorResponse body = new ErrorResponse(exception.getMessage());
+        return ResponseEntity.status(status).body(body);
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

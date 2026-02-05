@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -28,8 +31,10 @@ public class UserJpa {
     private Instant createdAt;
 
     @Column(name = "updated_at", nullable = false)
-    private
-    Instant updatedAt;
+    private Instant updatedAt;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<RoleJpa> roles;
 
     @PrePersist
     void prePersist() {

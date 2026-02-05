@@ -43,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User patchUserFirstNameByEmail(String firstName, String email) {
         UserJpa userJpa = userJpaRepository.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
         userJpa.setFirstName(firstName);
         userJpaRepository.save(userJpa);
         return UserJpaMapper.mapToDomainUser(userJpa);
@@ -52,7 +52,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void deleteUserByEmail(String email) {
         UserJpa userJpa = userJpaRepository.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
         userJpaRepository.delete(userJpa);
 
     }
@@ -60,9 +60,9 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public User updateUser(User domainUser) {
         UserJpa userJpa = userJpaRepository.findByEmail(domainUser.getEmail())
-                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "User not found"));
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
         userJpa.setFirstName(domainUser.getFirstName());
-        userJpa.setLastName(domainUser.getFirstName());
+        userJpa.setLastName(domainUser.getLastName());
         return UserJpaMapper.mapToDomainUser(userJpa);
     }
 }

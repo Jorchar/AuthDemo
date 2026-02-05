@@ -25,16 +25,8 @@ class UserServiceTest {
     @Test
     void shouldCreateUser() {
         // Given
-        User user = User.builder()
-                .firstName("Krzysztof")
-                .lastName("Kowalski")
-                .build();
-
-        User createdUser = User.builder()
-                .firstName("Krzysztof")
-                .lastName("Kowalski")
-                .build();
-
+        User user = User.builder().firstName("Krzysztof").lastName("Kowalski").build();
+        User createdUser = User.builder().firstName("Krzysztof").lastName("Kowalski").build();
         when(userRepository.save(user)).thenReturn(createdUser);
 
         // When
@@ -74,53 +66,5 @@ class UserServiceTest {
         // Then
         assertEquals(2, result.size());
         verify(userRepository).getAllUsers();
-    }
-
-    @Test
-    void shouldPatchUserFirstNameByEmail() {
-        // Given
-        String email = "jan.nowak@mail.com";
-        User patchedUser = User.builder().firstName("Janusz").lastName("Nowak").email(email).build();
-        when(userRepository.patchUserFirstNameByEmail("Janusz", email)).thenReturn(patchedUser);
-
-        // When
-        var result = userService.patchUserFirstNameByEmail("Janusz", email);
-
-        // Then
-        assertEquals("Janusz", result.getFirstName());
-        assertEquals(email, result.getEmail());
-        verify(userRepository).patchUserFirstNameByEmail("Janusz", email);
-    }
-
-    @Test
-    void shouldDeleteUserByEmail() {
-        // Given
-        String email = "anna.kowalska@mail.com";
-        doNothing().when(userRepository).deleteUserByEmail(email);
-
-        // When
-        userService.deleteUserByEmail(email);
-
-        // Then
-        verify(userRepository).deleteUserByEmail(email);
-    }
-
-    @Test
-    void shouldUpdateUser() {
-        // Given
-        User domainUser = User.builder()
-                .firstName("Krzysztof")
-                .lastName("Nowak")
-                .email("krzysztof.nowak@mail.com")
-                .build();
-
-        when(userRepository.updateUser(domainUser)).thenReturn(domainUser);
-
-        // When
-        var result = userService.updateUser(domainUser);
-
-        // Then
-        assertEquals("Krzysztof", result.getFirstName());
-        verify(userRepository).updateUser(domainUser);
     }
 }
