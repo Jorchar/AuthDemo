@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "roles")
@@ -21,9 +22,7 @@ public class RoleJpa {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "users_id", nullable = false)
-    private UserJpa user;
-
+    @ManyToMany(mappedBy = "roles")
+    private Set<UserJpa> users = new HashSet<>();
 }
 

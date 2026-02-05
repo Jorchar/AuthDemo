@@ -1,10 +1,21 @@
 CREATE TABLE roles (
     id bigint generated always as identity primary key,
-    user_id bigint not null,
-    name VARCHAR(100) not null,
+    name VARCHAR(100) not null unique
+);
 
-    constraint fk_roles_user
-    foreign key (user_id)
-    references users(id)
-    on delete cascade
-)
+INSERT INTO roles (name) VALUES
+    ('USER'),
+    ('ADMIN');
+
+CREATE TABLE user_roles (
+    user_id bigint not null,
+    role_id bigint not null,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+);
+
+INSERT INTO user_roles (user_id, role_id) VALUES
+    (1, 1),
+    (1, 2),
+    (2, 1);

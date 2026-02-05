@@ -14,3 +14,15 @@ ALTER TABLE users
 
 ALTER TABLE users
     ADD CONSTRAINT uq_users_email UNIQUE (email);
+
+INSERT INTO users (first_name, last_name, email, created_at, updated_at) VALUES
+('Anna', 'Kowalska', 'anna.kowalska@example.com', NOW(), NOW()),
+('Jan', 'Nowak', 'jan.nowak@example.com', NOW(), NOW()),
+('Michał', 'Wiśniewski', 'michal.wisniewski@example.com', NOW(), NOW()),
+('Katarzyna', 'Lewandowska', 'katarzyna.lewandowska@example.com', NOW(), NOW()),
+('Piotr', 'Zieliński', 'piotr.zielinski@example.com', NOW(), NOW()),
+('Magdalena', 'Wójcik', 'magdalena.wojcik@example.com', NOW(), NOW()),
+('Tomasz', 'Kamiński', 'tomasz.kaminski@example.com', NOW(), NOW()),
+('Agnieszka', 'Kaczmarek', 'agnieszka.kaczmarek@example.com', NOW(), NOW()),
+('Paweł', 'Jankowski', 'pawel.jankowski@example.com', NOW(), NOW()),
+('Joanna', 'Szymańska', 'joanna.szymanska@example.com', NOW(), NOW());
