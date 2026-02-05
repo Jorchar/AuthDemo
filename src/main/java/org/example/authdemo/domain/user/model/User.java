@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @AllArgsConstructor
 @Builder
 @Getter
@@ -19,4 +21,10 @@ public class User {
     String firstName;
 
     String lastName;
+
+    String email;
+
+    Instant createdAt;
+
+    Instant updatedAt;
 }

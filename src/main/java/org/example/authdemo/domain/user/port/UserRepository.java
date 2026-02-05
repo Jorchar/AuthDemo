@@ -2,8 +2,18 @@ package org.example.authdemo.domain.user.port;
 
 import org.example.authdemo.domain.user.model.User;
 
+import java.util.List;
+
 public interface UserRepository {
+    User getUserByFirstName(String firstName);
+
+    List<User> getAllUsers();
+
     User save(User user);
 
-    User patchUserFirstNameByLastName(String firstName, String lastName);
+    User patchUserFirstNameByEmail(String firstName, String email);
+
+    void deleteUserByEmail(String email);
+
+    User updateUser(User domainUser);
 }
