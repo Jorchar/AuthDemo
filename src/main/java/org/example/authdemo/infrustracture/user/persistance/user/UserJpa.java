@@ -1,7 +1,8 @@
-package org.example.authdemo.infrustracture.user.persistance;
+package org.example.authdemo.infrustracture.user.persistance.user;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.example.authdemo.infrustracture.user.persistance.role.RoleJpa;
 
 import java.time.Instant;
 import java.util.Set;

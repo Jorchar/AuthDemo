@@ -1,4 +1,4 @@
-package org.example.authdemo.infrustracture.user.persistance;
+package org.example.authdemo.infrustracture.user.persistance.user;
 
 import org.example.authdemo.domain.user.model.User;
 import org.springframework.stereotype.Component;

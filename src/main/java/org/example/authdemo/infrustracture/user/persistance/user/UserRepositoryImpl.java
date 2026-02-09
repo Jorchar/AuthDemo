@@ -1,8 +1,9 @@
-package org.example.authdemo.infrustracture.user.persistance;
+package org.example.authdemo.infrustracture.user.persistance.user;
 
 import lombok.AllArgsConstructor;
 import org.example.authdemo.domain.user.model.User;
 import org.example.authdemo.domain.user.port.UserRepository;
+import org.example.authdemo.infrustracture.user.persistance.EntityNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
