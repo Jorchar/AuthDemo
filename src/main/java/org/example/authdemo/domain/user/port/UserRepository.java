@@ -5,7 +5,7 @@ import org.example.authdemo.domain.user.model.User;
 import java.util.List;
 
 public interface UserRepository {
-    User getUserByFirstName(String firstName);
+    User getUserByEmail(String email);
 
     List<User> getAllUsers();
 

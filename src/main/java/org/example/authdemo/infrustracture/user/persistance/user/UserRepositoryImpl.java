@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import org.example.authdemo.domain.user.model.User;
 import org.example.authdemo.domain.user.port.UserRepository;
 import org.example.authdemo.infrustracture.user.persistance.EntityNotFoundException;
+import org.example.authdemo.infrustracture.user.persistance.role.RoleJpa;
+import org.example.authdemo.infrustracture.user.persistance.role.RoleJpaRepository;
+import org.example.authdemo.infrustracture.user.utils.Const;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -16,10 +19,11 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public class UserRepositoryImpl implements UserRepository {
 
     private final UserJpaRepository userJpaRepository;
+    private final RoleJpaRepository roleJpaRepository;
 
     @Override
-    public User getUserByFirstName(String firstName) {
-        var userJpa = userJpaRepository.findByFirstName(firstName)
+    public User getUserByEmail(String email) {
+        var userJpa = userJpaRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "User not found"));
         return UserJpaMapper.mapToDomainUser(userJpa);
     }
@@ -37,6 +41,8 @@ public class UserRepositoryImpl implements UserRepository {
                 user.getLastName(),
                 user.getEmail()
         );
+        RoleJpa defaultRole = roleJpaRepository.findByName(Const.DEFAULT_ROLE).orElseThrow();
+        userJpa.addRole(defaultRole);
         var createdUser = userJpaRepository.save(userJpa);
         return UserJpaMapper.mapToDomainUser(createdUser);
     }

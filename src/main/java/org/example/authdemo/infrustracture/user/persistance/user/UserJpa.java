@@ -5,6 +5,7 @@ import lombok.*;
 import org.example.authdemo.infrustracture.user.persistance.role.RoleJpa;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -38,7 +39,11 @@ public class UserJpa {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<RoleJpa> roles;
+    private Set<RoleJpa> roles = new HashSet<>();
+
+    public void addRole(RoleJpa role) {
+        roles.add(role);
+    }
 
     @PrePersist
     void prePersist() {

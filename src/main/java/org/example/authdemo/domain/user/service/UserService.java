@@ -12,8 +12,8 @@ import java.util.List;
 public class UserService {
     private final UserRepository userRepository;
 
-    public User getUserByFirstName(String firstName) {
-        return userRepository.getUserByFirstName(firstName);
+    public User getUserByEmail(String email) {
+        return userRepository.getUserByEmail(email);
     }
 
     public List<User> getAllUsers() {

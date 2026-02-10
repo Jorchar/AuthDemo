@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.authdemo.infrustracture.user.persistance.action.ActionJpa;
 import org.example.authdemo.infrustracture.user.persistance.user.UserJpa;
 
 import java.util.HashSet;
@@ -24,10 +25,9 @@ public class RoleJpa {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    private Set<UserJpa> users = new HashSet<>();
+    private Set<UserJpa> users;
 
-    public RoleJpa(String name) {
-        this.name = name;
-    }
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ActionJpa> actions = new HashSet<>();
 }
 

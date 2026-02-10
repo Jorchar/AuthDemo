@@ -38,17 +38,17 @@ class UserServiceTest {
     }
 
     @Test
-    void shouldGetUserByFirstName() {
+    void shouldGetUserByEmail() {
         // Given
         User user = User.builder().firstName("Jan").lastName("Nowak").build();
-        when(userRepository.getUserByFirstName("Jan")).thenReturn(user);
+        when(userRepository.getUserByEmail("Jan")).thenReturn(user);
 
         // When
-        var result = userService.getUserByFirstName("Jan");
+        var result = userService.getUserByEmail("Jan");
 
         // Then
         assertEquals("Jan", result.getFirstName());
-        verify(userRepository).getUserByFirstName("Jan");
+        verify(userRepository).getUserByEmail("Jan");
     }
 
     @Test
