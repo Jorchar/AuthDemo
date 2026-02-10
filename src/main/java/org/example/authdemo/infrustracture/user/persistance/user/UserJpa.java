@@ -45,6 +45,10 @@ public class UserJpa {
         roles.add(role);
     }
 
+    public void removeRole(RoleJpa role) {
+        roles.remove(role);
+    }
+
     @PrePersist
     void prePersist() {
         Instant now = Instant.now();
