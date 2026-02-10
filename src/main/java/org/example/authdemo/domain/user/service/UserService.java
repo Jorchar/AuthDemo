@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import org.example.authdemo.domain.user.model.Role;
 import org.example.authdemo.domain.user.model.User;
 import org.example.authdemo.domain.user.port.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,8 +19,8 @@ public class UserService {
         return userRepository.getUserByEmail(email);
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.getAllUsers();
+    public Page<User> getAllUsers(Pageable pageable) {
+        return userRepository.getAllUsers(pageable);
     }
 
     public User createUser(User user) {

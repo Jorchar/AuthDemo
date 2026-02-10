@@ -5,6 +5,10 @@ import org.example.authdemo.domain.user.service.UserService;
 import org.example.authdemo.infrustracture.user.controller.dto.RequestUserDto;
 import org.example.authdemo.infrustracture.user.controller.dto.RoleDto;
 import org.example.authdemo.infrustracture.user.controller.dto.UserDto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +27,14 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<UserDto>> getAllUsers() {
-        var users = userService.getAllUsers();
-        return ResponseEntity.ok(UserMapper.mapToUserDtoList(users));
+    public ResponseEntity<Page<UserDto>> getAllUsers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("email").ascending());
+        var users = userService.getAllUsers(pageable)
+                .map(UserMapper::mapToUserDto);
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/users/{email}")

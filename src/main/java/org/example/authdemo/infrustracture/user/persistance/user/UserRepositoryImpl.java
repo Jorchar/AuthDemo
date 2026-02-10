@@ -9,6 +9,8 @@ import org.example.authdemo.infrustracture.user.persistance.role.RoleJpa;
 import org.example.authdemo.infrustracture.user.persistance.role.RoleJpaMapper;
 import org.example.authdemo.infrustracture.user.persistance.role.RoleJpaRepository;
 import org.example.authdemo.infrustracture.user.utils.Const;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,9 +33,9 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        var jpaUsers = userJpaRepository.findAll();
-        return UserJpaMapper.mapToDomainUserList(jpaUsers);
+    public Page<User> getAllUsers(Pageable pageable) {
+        return userJpaRepository.findAll(pageable)
+                .map(UserJpaMapper::mapToDomainUser);
     }
 
     @Override
