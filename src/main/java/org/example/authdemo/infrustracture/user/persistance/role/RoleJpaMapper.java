@@ -13,7 +13,6 @@ public final class RoleJpaMapper {
 
     public static Role mapToDomainRole(RoleJpa role) {
         return Role.builder()
-                .id(role.getId())
                 .name(role.getName())
                 .build();
     }

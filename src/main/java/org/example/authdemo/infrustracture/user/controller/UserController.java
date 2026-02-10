@@ -3,6 +3,7 @@ package org.example.authdemo.infrustracture.user.controller;
 import jakarta.validation.Valid;
 import org.example.authdemo.domain.user.service.UserService;
 import org.example.authdemo.infrustracture.user.controller.dto.RequestUserDto;
+import org.example.authdemo.infrustracture.user.controller.dto.RoleDto;
 import org.example.authdemo.infrustracture.user.controller.dto.UserDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -47,9 +48,7 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<UserDto> updateUser(
-            @Valid @RequestBody RequestUserDto request
-    ) {
+    public ResponseEntity<UserDto> updateUser(@Valid @RequestBody RequestUserDto request) {
         var domainUser = UserMapper.mapToDomainUser(request);
         var patchedUser = userService.updateUser(domainUser);
         return ResponseEntity.ok(UserMapper.mapToUserDto(patchedUser));
@@ -68,5 +67,31 @@ public class UserController {
     public ResponseEntity<Void> deleteUser(@PathVariable String email) {
         userService.deleteUserByEmail(email);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping(path = "/users/{email}/role",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<List<RoleDto>> addRoleByEmail(
+            @PathVariable String email,
+            @Valid @RequestBody RoleDto role
+    ) {
+        var user = userService.getUserByEmail(email);
+        var updatedRoles = userService.addUserRole(user, RoleMapper.mapToDomainRole(role));
+        return ResponseEntity.ok(updatedRoles.stream().map(RoleMapper::mapToRoleDto).toList());
+    }
+
+    @DeleteMapping(path = "/users/{email}/role",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<List<RoleDto>> removeRoleByEmail(
+            @PathVariable String email,
+            @Valid @RequestBody RoleDto role
+    ) {
+        var user = userService.getUserByEmail(email);
+        var updatedRoles = userService.removeUserRole(user, RoleMapper.mapToDomainRole(role));
+        return ResponseEntity.ok(updatedRoles.stream().map(RoleMapper::mapToRoleDto).toList());
     }
 }

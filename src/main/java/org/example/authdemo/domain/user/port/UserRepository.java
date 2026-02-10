@@ -18,7 +18,7 @@ public interface UserRepository {
 
     User updateUser(User domainUser);
 
-    User addUserRole(User user, Role role);
+    List<Role> addUserRole(User user, Role role);
 
-    User removeUserRole(User user, Role role);
+    List<Role> removeUserRole(User user, Role role);
 }

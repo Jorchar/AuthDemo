@@ -6,6 +6,7 @@ import org.example.authdemo.domain.user.model.User;
 import org.example.authdemo.domain.user.port.UserRepository;
 import org.example.authdemo.infrustracture.user.persistance.EntityNotFoundException;
 import org.example.authdemo.infrustracture.user.persistance.role.RoleJpa;
+import org.example.authdemo.infrustracture.user.persistance.role.RoleJpaMapper;
 import org.example.authdemo.infrustracture.user.persistance.role.RoleJpaRepository;
 import org.example.authdemo.infrustracture.user.utils.Const;
 import org.springframework.stereotype.Component;
@@ -76,23 +77,26 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User addUserRole(User domainUser, Role domainRole) {
+    public List<Role> addUserRole(User domainUser, Role domainRole) {
         UserJpa userJpa = userJpaRepository.findByEmail(domainUser.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         RoleJpa roleJpa = roleJpaRepository.findByName(domainRole.getName())
                 .orElseThrow(() -> new EntityNotFoundException("Role not found"));
         userJpa.addRole(roleJpa);
         userJpaRepository.save(userJpa);
-        return UserJpaMapper.mapToDomainUser(userJpa);
+        return userJpa.getRoles().stream()
+                .map(RoleJpaMapper::mapToDomainRole).toList();
     }
 
     @Override
-    public User removeUserRole(User domainUser, Role domainRole) {
+    public List<Role> removeUserRole(User domainUser, Role domainRole) {
         UserJpa userJpa = userJpaRepository.findByEmail(domainUser.getEmail())
                 .orElseThrow(() -> new EntityNotFoundException("User not found"));
         RoleJpa roleJpa = roleJpaRepository.findByName(domainRole.getName())
                 .orElseThrow(() -> new EntityNotFoundException("Role not found"));
         userJpa.removeRole(roleJpa);
-        return UserJpaMapper.mapToDomainUser(userJpa);
+        userJpaRepository.save(userJpa);
+        return userJpa.getRoles().stream()
+                .map(RoleJpaMapper::mapToDomainRole).toList();
     }
 }
