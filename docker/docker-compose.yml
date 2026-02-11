@@ -33,6 +33,15 @@ services:
     depends_on:
       - cache_redis
 
+  wiremock:
+    image: "wiremock/wiremock:nightly"
+    ports:
+      - "8085:8080"
+    container_name: wiremock
+    volumes:
+      - ./wiremock:/home/wiremock/mappings
+    entrypoint: [ "/docker-entrypoint.sh", "--verbose" ]
+
 volumes:
   db-data:
   redis-data:

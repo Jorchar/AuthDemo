@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component;
 public class CacheUpdateScheduler {
     private final RoleService roleService;
 
-    @Scheduled(cron = "50 58 13 * * ?")
+    //@Scheduled(cron = "50 58 13 * * ?")
+    @Scheduled(fixedRate = 10000)
     public void refreshRoles() {
         var roles = roleService.getRoleActions();
     }

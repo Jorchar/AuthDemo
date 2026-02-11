@@ -1,0 +1,37 @@
+{
+  "name": "actions",
+  "request": {
+    "url": "/api/actions",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "USER": [
+        {
+          "id": 1,
+          "name": "USER_READ",
+          "description": "reading user details"
+        }
+      ],
+      "ADMIN": [
+        {
+          "id": 2,
+          "name": "USER_WRITE",
+          "description": "change user details"
+        },
+        {
+          "id": 3,
+          "name": "USER_DELETE",
+          "description": "remove user details"
+        }
+      ]
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": [
+      "response-template"
+    ]
+  }
+}
