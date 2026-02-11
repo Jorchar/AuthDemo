@@ -5,3 +5,7 @@ spring.datasource.password: demopasswd
 spring.datasource.driver-class-name: org.postgresql.Driver
 
 spring.flyway.enabled: true
+
+spring.data.redis:
+  host: localhost
+  port: 6379
